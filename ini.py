@@ -8,6 +8,11 @@ Created on Tue May 28 13:44:11 2019
 #%%
 import os,sys,re
 import numpy as np
+import datetime as dm
+
+#%%
+gvars = {'TODAY':dm.datetime.today().strftime('%Y%m%d'),
+         'TRADE_DATE_FILE':'/tmp/data/trade.date.txt'}
 
 #%%
 class Ini():
@@ -51,6 +56,12 @@ class Ini():
     def __init__(self,fini):
         self.fini = fini
         self._parser_()
+
+    DICT = gvars
+    PATTERNS = {'include':r'include\s+<[^<>]*ini>',
+               'header' :r'\s*[^\=]*\[\w*\]',
+               'content':r'\w*\s*\=\s*[^\[\]]+'}
+    QUOTE_PATTERN = r'\%[^\%]+\%'
     
 #==============================================================================
     @property
@@ -93,11 +104,6 @@ class Ini():
         self.DICT[key] = str_value
 
 #==============================================================================
-    PATTERNS = {'include':r'include\s+<[^<>]*ini>',
-                'header' :r'\s*[^\=]*\[\w*\]',
-                'content':r'\w*\s*\=\s*[^\[\]]+'}
-    QUOTE_PATTERN = r'\%[^\%]+\%'
-    DICT = dict()
         
     def _parser_(self):
         f = open(self.fini)
