@@ -53,9 +53,10 @@ class Ini():
     * Case of characters are ignorable. Users shall put either upper case or lower case into these functions.
     
     """
-    def __init__(self,fini):
-        self.fini = fini
-        self._parser_()
+    def __init__(self,fini=None):
+        if fini is not None:
+            self.fini = fini
+            self._parser_()
 
     DICT = gvars
     PATTERNS = {'include':r'include\s+<[^<>]*ini>',
